@@ -126,7 +126,23 @@ All internal context is preserved in `.dev/context/` for future reference:
 
 ---
 
-**Version:** 0.1.0  
+**Version:** 0.2.0  
 **Date:** October 1, 2025  
 **Status:** Production Ready 🚀
+
+## 🔄 Recent Changes (v0.2.0)
+
+### API Simplification
+- Removed `warmup_type` parameter (only linear warmup supported)
+- Cleaner, more PyTorch-standard API
+
+### Compatibility Improvements
+- Python 3.7+ support (was 3.10+)
+- PyTorch 1.4+ support (was 2.0+)
+- Backward compatibility for older PyTorch versions
+
+### Build System
+- Changed from `uv_build` to `setuptools`
+- Direct pip installation from Git now supported
+- No special tools required for installation
 

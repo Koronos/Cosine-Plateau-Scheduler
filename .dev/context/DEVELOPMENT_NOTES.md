@@ -114,9 +114,16 @@ tests/
   - Design decision: more intuitive for users
   - Easy to calculate from absolute if needed
 
-- Single warmup type (linear)
-  - Simplified from original design
+- Single warmup type (linear only)
+  - Simplified from original design (removed `warmup_type` parameter in v0.2.0)
   - Sufficient for vast majority of use cases
+  - Can be added back if users request it
+
+- `min_lr_ratio` instead of `eta_min`
+  - Uses ratio (0.1 = 10% of base_lr) instead of absolute value
+  - More intuitive for most users
+  - Different from PyTorch's CosineAnnealingLR convention (which uses eta_min)
+  - Considered changing but decided current approach is clearer
 
 ### User Feedback Incorporated
 
@@ -127,7 +134,19 @@ tests/
 
 ### Version History
 
-- v0.1.0: Initial release with optimized implementation
+- **v0.2.0** (2025-10-01): API simplification and compatibility improvements
+  - Removed `warmup_type` parameter (breaking change)
+  - Changed build system from `uv_build` to `setuptools`
+  - Broadened Python support: 3.7+ (was 3.10+)
+  - Broadened PyTorch support: 1.4+ (was 2.0+)
+  - Added PyTorch < 2.0 compatibility layer
+  - Removed private email from package metadata
+  - Better alignment with PyTorch scheduler conventions
+
+- **v0.1.0** (2025-10-01): Initial release with optimized implementation
+  - Linear warmup with optional smoothing (later removed)
+  - Independent cosine segments between plateaus
+  - Performance optimized implementation (~0.5μs per step)
 
 ## Maintenance Notes
 

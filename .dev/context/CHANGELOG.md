@@ -2,6 +2,58 @@
 
 All notable changes to the Cosine Plateau Scheduler will be documented in this file.
 
+## [0.2.0] - 2025-10-01
+
+### Changed
+- **BREAKING**: Removed `warmup_type` parameter
+  - Only linear warmup is supported (was the only implemented option)
+  - Simplifies API and follows PyTorch scheduler conventions
+  - Users should remove `warmup_type='linear'` from their code
+- Updated to follow PyTorch naming conventions more closely
+  - `warmup_steps` follows standard (not percentage-based)
+  - Aligns with HuggingFace Transformers and PyTorch-Ignite conventions
+
+### Improved
+- Cleaner API with fewer unnecessary parameters
+- Better compatibility with PyTorch ecosystem
+- Simplified validation logic
+
+### Documentation
+- Updated all examples to remove `warmup_type` parameter
+- Updated README with clearer parameter descriptions
+- Updated tests to reflect API changes
+
+### Migration Guide (0.1.0 → 0.2.0)
+```python
+# Before (0.1.0):
+scheduler = CosinePlateauScheduler(
+    optimizer,
+    total_steps=10000,
+    warmup_steps=1000,
+    warmup_type='linear',  # ❌ Remove this line
+    min_lr_ratio=0.1
+)
+
+# After (0.2.0):
+scheduler = CosinePlateauScheduler(
+    optimizer,
+    total_steps=10000,
+    warmup_steps=1000,  # ✅ That's it!
+    min_lr_ratio=0.1
+)
+```
+
+### Build System
+- Changed from `uv_build` to `setuptools` for better pip compatibility
+- Enables direct installation from Git: `pip install git+https://github.com/...`
+- No longer requires `uv` to be installed
+
+### Package Metadata
+- Removed private email from author information
+- Broadened Python compatibility: 3.7+ (was 3.10+)
+- Broadened PyTorch compatibility: 1.4+ (was 2.0+)
+- Added backward compatibility for PyTorch < 2.0 (LRScheduler vs _LRScheduler)
+
 ## [0.1.0] - 2025-10-01
 
 ### Added

@@ -8,36 +8,35 @@ This guide explains how to publish the `cosine-plateau-scheduler` package to PyP
    - [PyPI](https://pypi.org/account/register/) (production)
    - [TestPyPI](https://test.pypi.org/account/register/) (testing)
 
-2. Install uv if you haven't:
+2. Install build tools:
    ```bash
-   pip install uv
+   pip install build twine
    ```
 
 ## Building the Package
 
 1. Make sure all tests pass:
    ```bash
-   uv pip install -e ".[dev]"
+   pip install -e ".[dev]"
    pytest tests/
    ```
 
 2. Build the distribution:
    ```bash
-   uv build
+   python -m build
    ```
 
    This creates:
    - `dist/cosine_plateau_scheduler-X.Y.Z.tar.gz` (source distribution)
    - `dist/cosine_plateau_scheduler-X.Y.Z-py3-none-any.whl` (wheel)
 
+   **Note:** Since v0.2.0, we use `setuptools` instead of `uv_build` for better compatibility.
+
 ## Testing on TestPyPI
 
 Before publishing to the real PyPI, test on TestPyPI:
 
 ```bash
-# Install twine for uploading
-uv pip install twine
-
 # Upload to TestPyPI
 python -m twine upload --repository testpypi dist/*
 ```
@@ -87,33 +86,44 @@ python -m twine upload dist/*
 
 ## Version Management
 
-Update version in `pyproject.toml` before each release:
+Update version in TWO places before each release:
 
+1. `pyproject.toml`:
 ```toml
 [project]
 name = "cosine-plateau-scheduler"
-version = "0.1.0"  # Update this
+version = "0.2.0"  # Update this
+```
+
+2. `src/cosine_plateau_scheduler/__init__.py`:
+```python
+__version__ = "0.2.0"  # Update this too
 ```
 
 Follow [Semantic Versioning](https://semver.org/):
-- Major version: Breaking changes
-- Minor version: New features (backward compatible)
-- Patch version: Bug fixes
+- Major version: Breaking changes (e.g., 1.0.0)
+- Minor version: New features (backward compatible) or breaking changes in 0.x (e.g., 0.2.0)
+- Patch version: Bug fixes (e.g., 0.2.1)
+
+**Note:** Removing `warmup_type` in v0.2.0 was a breaking change, but acceptable for 0.x versions.
 
 ## Release Checklist
 
-- [ ] All tests pass
-- [ ] Documentation is up to date
-- [ ] CHANGELOG updated (if you create one)
-- [ ] Version bumped in `pyproject.toml`
-- [ ] Built distribution (`uv build`)
+- [ ] All tests pass (`pytest tests/`)
+- [ ] Documentation is up to date (README.md, examples)
+- [ ] `.dev/context/CHANGELOG.md` updated with changes
+- [ ] Version bumped in BOTH:
+  - [ ] `pyproject.toml`
+  - [ ] `src/cosine_plateau_scheduler/__init__.py`
+- [ ] Built distribution (`python -m build`)
 - [ ] Tested on TestPyPI
 - [ ] Published to PyPI
 - [ ] Tagged release in git:
   ```bash
-  git tag -a v0.1.0 -m "Release version 0.1.0"
-  git push origin v0.1.0
+  git tag -a v0.2.0 -m "Release v0.2.0: API simplification"
+  git push origin v0.2.0
   ```
+- [ ] Create GitHub Release with changelog
 
 ## Continuous Integration (Optional)
 
@@ -138,10 +148,10 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - name: Install uv
-        run: pip install uv
+      - name: Install build tools
+        run: pip install build
       - name: Build
-        run: uv build
+        run: python -m build
       - name: Publish
         env:
           TWINE_USERNAME: __token__
