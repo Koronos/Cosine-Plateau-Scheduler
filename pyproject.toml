@@ -1,0 +1,46 @@
+[project]
+name = "cosine-plateau-scheduler"
+version = "0.1.0"
+description = "Advanced PyTorch learning rate scheduler with cosine warm-up and plateau steps for optimal training convergence"
+readme = "README.md"
+authors = [
+    { name = "Koronos" }
+]
+requires-python = ">=3.7"
+dependencies = [
+    "torch>=1.4.0",
+]
+keywords = ["pytorch", "learning-rate", "scheduler", "deep-learning", "optimization", "cosine-annealing"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://github.com/Koronos/cosine-plateau-scheduler"
+Repository = "https://github.com/Koronos/cosine-plateau-scheduler"
+Issues = "https://github.com/Koronos/cosine-plateau-scheduler/issues"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "matplotlib>=3.5.0",
+]
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
