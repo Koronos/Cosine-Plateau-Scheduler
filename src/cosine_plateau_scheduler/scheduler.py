@@ -32,7 +32,6 @@ class CosinePlateauScheduler(LRScheduler):
         base_lr (float, optional): Base (maximum) learning rate. If None, uses optimizer's LR
         min_lr_ratio (float): Minimum LR as ratio of base_lr (default: 0.0)
         warmup_steps (int): Number of warm-up steps (default: 0)
-        warmup_type (str): Type of warm-up: 'linear' (default: 'linear')
         plateau_steps (List[Tuple[float, float]], optional): List of (position%, duration%) tuples
             where position is the % of post-warmup steps where plateau starts,
             and duration is the % of post-warmup steps the plateau lasts.
@@ -61,7 +60,6 @@ class CosinePlateauScheduler(LRScheduler):
         base_lr: Optional[float] = None,
         min_lr_ratio: float = 0.0,
         warmup_steps: int = 0,
-        warmup_type: str = 'linear',
         plateau_steps: Optional[List[Tuple[float, float]]] = None,
         last_epoch: int = -1,
         verbose: bool = False
@@ -69,12 +67,7 @@ class CosinePlateauScheduler(LRScheduler):
         self.total_steps = total_steps
         self.warmup_steps = warmup_steps
         self.min_lr_ratio = min_lr_ratio
-        self.warmup_type = warmup_type.lower()
         self.verbose = verbose
-        
-        # Validate warmup_type
-        if self.warmup_type not in ['linear']:
-            raise ValueError(f"warmup_type must be 'linear', got '{warmup_type}'")
         
         # Base learning rate
         if base_lr is None:

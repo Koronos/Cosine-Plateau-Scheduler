@@ -125,8 +125,6 @@ At specified intervals, the learning rate remains constant for a defined duratio
 
 - **`warmup_steps`** (`int`): Number of warm-up steps at the beginning. Default: `0`
 
-- **`warmup_type`** (`str`): Type of warm-up curve. Currently only `'linear'` is supported. Default: `'linear'`
-
 - **`plateau_steps`** (`List[Tuple[float, float]]`, optional): List of plateau configurations. Each tuple is `(position%, duration%)`:
   - `position%`: Where the plateau starts (% of post-warmup steps)
   - `duration%`: How long the plateau lasts (% of post-warmup steps)
@@ -170,14 +168,13 @@ scheduler = CosinePlateauScheduler(
 )
 ```
 
-### Example 3: Linear Warm-up with Single Plateau
+### Example 3: Warm-up with Single Plateau
 
 ```python
 scheduler = CosinePlateauScheduler(
     optimizer,
     total_steps=10000,
     warmup_steps=1000,
-    warmup_type='linear',
     min_lr_ratio=0.05,
     plateau_steps=[(60, 20)]
 )

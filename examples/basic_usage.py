@@ -23,8 +23,7 @@ def main():
         total_steps=total_steps,
         warmup_steps=warmup_steps,
         min_lr_ratio=0.1,  # Min LR will be 10% of base LR
-        plateau_steps=[(50, 30), (85, 10)],
-        warmup_type='cosine'  # or 'linear'
+        plateau_steps=[(50, 30), (85, 10)]
     )
     
     # Training loop

@@ -35,8 +35,7 @@ def test_warmup_phase(simple_optimizer):
         simple_optimizer,
         total_steps=1000,
         warmup_steps=100,
-        min_lr_ratio=0.1,
-        warmup_type='linear'
+        min_lr_ratio=0.1
     )
     
     lrs = []
@@ -139,16 +138,6 @@ def test_invalid_plateau_values(simple_optimizer):
             simple_optimizer,
             total_steps=1000,
             plateau_steps=[(50, 150)]  # Invalid: duration > 100
-        )
-
-
-def test_invalid_warmup_type(simple_optimizer):
-    """Test that invalid warmup type raises error."""
-    with pytest.raises(ValueError):
-        CosinePlateauScheduler(
-            simple_optimizer,
-            total_steps=1000,
-            warmup_type='invalid'
         )
 
 
